@@ -17,10 +17,10 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
-import { generateScreenshot } from "@/actions/generate-screenshot";
 import { Loader2, X } from "lucide-react";
 import { useDataStore, useModalStore } from "@/hooks/use-store";
-import { increaseScreenshotCount } from "@/actions/screenshot-count";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export const ToolboxForm = ({ url }: { url?: string }) => {
   const [canSelectMockup, setCanSelectMockup] = useState(true);
@@ -44,18 +44,26 @@ export const ToolboxForm = ({ url }: { url?: string }) => {
 
   const onSubmit = async (data: z.infer<typeof toolboxFormSchema>) => {
     startTransition(async () => {
-      setIsOpen(true);
-      const generateScreenshotResult = await generateScreenshot(data);
-      if (generateScreenshotResult.success) {
-        const { fileName, pageTitle, screenshot, mimeType } =
-          generateScreenshotResult;
-        const imageSrc = `data:${mimeType};base64,${screenshot}`;
-        setData({ imageSrc: imageSrc, fileName, pageTitle });
-        increaseScreenshotCount();
-      } else {
-        console.error(generateScreenshotResult.message);
-      }
-      setIsOpen(false);
+      startTransition(async () => {
+        setIsOpen(true);
+        try {
+          const res = await axios.post(
+            process.env.NEXT_PUBLIC_RENDER_URL!,
+            data
+          );
+          if (res.status === 200) {
+            const { fileName, pageTitle, screenshot, mimeType } = res.data;
+
+            const imageSrc = `data:${mimeType};base64,${screenshot}`;
+            setData({ imageSrc: imageSrc, fileName, pageTitle });
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Something went wrong.");
+        } finally {
+          setIsOpen(false);
+        }
+      });
     });
   };
 
