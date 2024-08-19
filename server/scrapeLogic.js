@@ -41,10 +41,10 @@ const scrapeLogic = async (res) => {
     console.log('The title of this blog post is "%s".', fullTitle);
 
     res.send(fullTitle);
+
+    await browser.close();
   } catch (error) {
     console.log(error);
-  } finally {
-    await browser.close();
   }
 };
 
