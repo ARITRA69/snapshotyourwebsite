@@ -11,15 +11,13 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
-import { isValidUrl } from "@/actions/isValidUrl";
 import toast from "react-hot-toast";
 import { useState, useTransition } from "react";
 import { searchSchema } from "@/schema/type";
 import { useDataStore, useModalStore } from "@/hooks/use-store";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { generateScreenshot } from "@/actions/generate-screenshot";
-import { increaseScreenshotCount } from "@/actions/screenshot-count";
+import axios from "axios";
 
 const shadows = Shadows_Into_Light({ subsets: ["latin"], weight: ["400"] });
 
@@ -38,32 +36,27 @@ export const SearchComponent = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof searchSchema>) => {
-    setIsOpen(true);
     startTransition(async () => {
+      setIsOpen(true);
+      const payloadData = {
+        targetUrl: data.url,
+        captureMode: "VISIBLE_PART",
+        deviceMockup: "DESKTOP",
+        fileFormat: "png",
+        height: 1080,
+        width: 1920,
+      };
       try {
-        const res = await isValidUrl(data);
-        if (!res.isValid) {
-          toast.error("Website not found");
-        } else {
-          const data = {
-            targetUrl: res.url,
-            captureMode: "VISIBLE_PART",
-            deviceMockup: "DESKTOP",
-            fileFormat: "png",
-            height: 1080,
-            width: 1920,
-          };
-          const generateScreenshotResult = await generateScreenshot(data);
-          if (generateScreenshotResult.success) {
-            const { fileName, pageTitle, screenshot, mimeType } =
-              generateScreenshotResult;
-            const imageSrc = `data:${mimeType};base64,${screenshot}`;
-            setData({ imageSrc: imageSrc, fileName, pageTitle });
-            router.push(`/screenshot-tool?url=${res.url}`);
-            increaseScreenshotCount();
-          } else {
-            console.error(generateScreenshotResult.message);
-          }
+        const res = await axios.post(
+          process.env.NEXT_PUBLIC_RENDER_URL!,
+          payloadData
+        );
+        if (res.status === 200) {
+          const { fileName, pageTitle, screenshot, mimeType } = res.data;
+
+          const imageSrc = `data:${mimeType};base64,${screenshot}`;
+          setData({ imageSrc: imageSrc, fileName, pageTitle });
+          router.push(`/screenshot-tool?url=${url}`);
         }
       } catch (error) {
         console.log(error);
