@@ -1,5 +1,4 @@
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const puppeteer = require("puppeteer");
 
 require("dotenv").config();
 
@@ -49,7 +48,7 @@ const takeScreenshot = async (req, res) => {
   try {
     const page = await browser.newPage();
     
-    await page.setViewport({ width: width , height: height || 1080 });
+    await page.setViewport({ width: width , height: height || 1280 });
 
     page.setDefaultNavigationTimeout(20000); // 20 seconds
 
