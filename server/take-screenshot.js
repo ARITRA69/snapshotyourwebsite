@@ -34,6 +34,7 @@ const takeScreenshot = async (req, res) => {
       "--disable-extensions",
       '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list',
     ],
+    headless: true,
     ignoreHTTPSErrors: true,
     executablePath:
       process.env.NODE_ENV === "production"
@@ -49,7 +50,7 @@ const takeScreenshot = async (req, res) => {
     page.setDefaultNavigationTimeout(20000); // 20 seconds
 
     const response = await page.goto(normalizedUrl, {
-      waitUntil: "networkidle0",
+      waitUntil: "networkidle2",
       timeout: 20000, // 20 seconds
     });
 
