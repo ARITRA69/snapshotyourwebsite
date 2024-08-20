@@ -1,5 +1,9 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+
 require("dotenv").config();
+
+puppeteer.use(StealthPlugin());
 
 const normalizeUrl = (url) => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
@@ -89,9 +93,9 @@ const takeScreenshot = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Failed to take screenshot" });
   } finally {
-    if (browser) {
-      await browser.close();
-    }
+   
+    await browser.close();
+    
   }
 };
 
