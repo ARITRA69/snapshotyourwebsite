@@ -9,7 +9,10 @@ const cors = require("cors");
 app.use(express.json());
 
 app.use(
-  cors({})
+  cors({
+    origin: "http://localhost:3000" || "https://spanshotyourwebsite.vercel.app" || "https://www.spanshotyourwebsite.com",
+    allowedHeaders: ["Content-Type"],
+  })
 );
 
 app.get("/scrape", (req, res) => {
