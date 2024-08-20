@@ -2,8 +2,6 @@ const puppeteer = require("puppeteer");
 
 require("dotenv").config();
 
-puppeteer.use(StealthPlugin());
-
 const normalizeUrl = (url) => {
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     url = 'https://' + url;
