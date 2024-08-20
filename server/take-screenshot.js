@@ -29,7 +29,7 @@ const takeScreenshot = async (req, res) => {
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
-      // "--single-process",
+      "--single-process",
       "--no-zygote",
       "--disable-extensions",
       '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list',
