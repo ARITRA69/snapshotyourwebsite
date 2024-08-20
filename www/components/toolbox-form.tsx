@@ -49,7 +49,7 @@ export const ToolboxForm = ({ url }: { url?: string }) => {
         try {
           const res = await axios.post(
             process.env.NODE_ENV === "production"
-              ? process.env.NEXT_PUBLIC_RENDER_URL!
+              ? `${process.env.NEXT_PUBLIC_RENDER_URL}/take-screenshot`
               : "http://localhost:4000/take-screenshot",
             data,
             {
