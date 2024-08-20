@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000" || "https://spanshotyourwebsite.vercel.app" || "https://www.spanshotyourwebsite.com",
+    origin: process.env.NODE_ENV === "production" ? "https://www.snapshotyourwebsite.com" : "http://localhost:3000",
     allowedHeaders: ["Content-Type"],
   })
 );
