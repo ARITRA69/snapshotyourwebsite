@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { Banner } from "@/components/banner";
 import { ModalProvider } from "@/providers/modal-provider";
 import { Footer } from "@/components/footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const gabarito = Gabarito({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={gabarito.className}>
+        <Analytics />
         <Toaster position="top-center" />
         <ModalProvider />
         <Toaster position="top-center" />

@@ -43,11 +43,11 @@ const takeScreenshot = async (req, res) => {
     
     await page.setViewport({ width: width || 1920, height: height || 1080 });
 
-    page.setDefaultNavigationTimeout(10000); // 10 seconds
+    page.setDefaultNavigationTimeout(20000); // 10 seconds
 
     const response = await page.goto(normalizedUrl, {
       waitUntil: "networkidle0",
-      timeout: 10000, // 10 seconds
+      timeout: 20000, // 10 seconds
     });
 
     if(!response || response.status() >= 400) {
