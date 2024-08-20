@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV === "production" ? "https://www.snapshotyourwebsite.com" : "http://localhost:3000",
+    origin: "https://www.snapshotyourwebsite.com",
     allowedHeaders: ["Content-Type"],
   })
 );
