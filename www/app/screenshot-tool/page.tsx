@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 export default function ScreenshotTool() {
   return (
-    <div className="mt-10 flex flex-col gap-4">
+    <div className="mt-8 flex flex-col gap-4">
       <Suspense>
         <Toolbox />
       </Suspense>

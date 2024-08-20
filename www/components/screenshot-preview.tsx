@@ -35,11 +35,11 @@ export const ScreenshotPreview = () => {
           <div className="flex gap-4">
             <div className="flex gap-1">
               <span className="font-semibold">Website: </span>
-              <span className="text-accent">{pageTitle}</span>
+              <span className="text-accent line-clamp-1">{pageTitle}</span>
             </div>
             <div className="flex gap-1">
               <span className="font-semibold">File: </span>
-              <span className="text-accent">{fileName}</span>
+              <span className="text-accent line-clamp-1">{fileName}</span>
             </div>
             <Badge className="bg-zinc-700 text-white px-2 py-1">
               {isFullPage ? "Full Page" : "Visible Part"}

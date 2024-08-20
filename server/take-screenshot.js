@@ -29,9 +29,12 @@ const takeScreenshot = async (req, res) => {
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
-      "--single-process",
+      // "--single-process",
       "--no-zygote",
+      "--disable-extensions",
+      '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list',
     ],
+    ignoreHTTPSErrors: true,
     executablePath:
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
@@ -41,13 +44,13 @@ const takeScreenshot = async (req, res) => {
   try {
     const page = await browser.newPage();
     
-    await page.setViewport({ width: width || 1920, height: height || 1080 });
+    await page.setViewport({ width: width , height: height || 1080 });
 
-    page.setDefaultNavigationTimeout(20000); // 10 seconds
+    page.setDefaultNavigationTimeout(20000); // 20 seconds
 
     const response = await page.goto(normalizedUrl, {
       waitUntil: "networkidle0",
-      timeout: 20000, // 10 seconds
+      timeout: 20000, // 20 seconds
     });
 
     if(!response || response.status() >= 400) {

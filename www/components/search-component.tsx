@@ -43,8 +43,8 @@ export const SearchComponent = () => {
         captureMode: "VISIBLE_PART",
         deviceMockup: "DESKTOP",
         fileFormat: "png",
-        height: 1080,
-        width: 1920,
+        height: 720,
+        width: 1280,
       };
       try {
         const res = await axios.post(
