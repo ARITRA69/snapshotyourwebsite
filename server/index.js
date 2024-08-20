@@ -10,9 +10,13 @@ app.use(express.json());
 app.use(
   cors({
     origin: "https://www.snapshotyourwebsite.com",
+    methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
 
 app.get("/scrape", (req, res) => {
   scrapeLogic(res);

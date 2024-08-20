@@ -49,15 +49,6 @@ const takeScreenshot = async (req, res) => {
 
   try {
     const page = await browser.newPage();
-  
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-      if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
-        req.abort();
-      } else {
-        req.continue();
-      }
-    });
 
     await page.setViewport({ width: width , height: height || 1280 });
 
