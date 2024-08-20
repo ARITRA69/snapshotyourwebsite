@@ -54,7 +54,7 @@ export const ScreenshotPreview = () => {
           </div>
         </div>
       )}
-      <div className="overflow-hidden aspect-video object-cover w-full border shadow-md">
+      <div className="overflow-y-auto aspect-video object-cover w-full border shadow-md">
         <Image
           src={imageSrc}
           alt={pageTitle!}

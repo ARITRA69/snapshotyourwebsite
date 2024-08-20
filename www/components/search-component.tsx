@@ -48,9 +48,25 @@ export const SearchComponent = () => {
       };
       try {
         const res = await axios.post(
-          process.env.NEXT_PUBLIC_RENDER_URL!,
-          payloadData
+          process.env.NODE_ENV === "production"
+            ? process.env.NEXT_PUBLIC_RENDER_URL!
+            : "http://localhost:4000/take-screenshot",
+          payloadData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
+        // const res = await axios.post(
+        //   "http://localhost:4000/take-screenshot",
+        //   payloadData,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
         if (res.status === 200) {
           const { fileName, pageTitle, screenshot, mimeType } = res.data;
 

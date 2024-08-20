@@ -48,8 +48,15 @@ export const ToolboxForm = ({ url }: { url?: string }) => {
         setIsOpen(true);
         try {
           const res = await axios.post(
-            process.env.NEXT_PUBLIC_RENDER_URL!,
-            data
+            process.env.NODE_ENV === "production"
+              ? process.env.NEXT_PUBLIC_RENDER_URL!
+              : "http://localhost:4000/take-screenshot",
+            data,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
           if (res.status === 200) {
             const { fileName, pageTitle, screenshot, mimeType } = res.data;
