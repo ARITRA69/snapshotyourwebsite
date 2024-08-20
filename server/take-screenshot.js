@@ -28,12 +28,16 @@ const takeScreenshot = async (req, res) => {
 
   const browser = await puppeteer.launch({
     args: [
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "--no-zygote",
-      "--disable-extensions",
-      '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list',
+      '--disable-setuid-sandbox',
+      '--no-sandbox',
+      '--single-process',
+      '--no-zygote',
+      '--disable-extensions',
+      '--ignore-certificate-errors',
+      '--ignore-certificate-errors-spki-list',
+      '--disable-accelerated-2d-canvas',
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
     ],
     headless: true,
     ignoreHTTPSErrors: true,
@@ -45,7 +49,16 @@ const takeScreenshot = async (req, res) => {
 
   try {
     const page = await browser.newPage();
-    
+  
+    await page.setRequestInterception(true);
+    page.on('request', (req) => {
+      if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+
     await page.setViewport({ width: width , height: height || 1280 });
 
     // page.setDefaultNavigationTimeout(20000); // 20 seconds
@@ -90,8 +103,9 @@ const takeScreenshot = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Failed to take screenshot" });
   } finally {
-   
-    await browser.close();
+    if(browser) {
+      await browser.close();
+    }
     
   }
 };
