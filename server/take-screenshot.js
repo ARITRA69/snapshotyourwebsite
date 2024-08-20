@@ -66,6 +66,8 @@ const takeScreenshot = async (req, res) => {
 
     if (captureMode === "FULL_PAGE") {
       screenshotOptions.fullPage = true;
+    } else {
+      screenshotOptions.fullPage = false;
     }
 
     const screenshot = await page.screenshot(screenshotOptions);

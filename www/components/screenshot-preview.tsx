@@ -4,10 +4,11 @@ import { useDataStore } from "@/hooks/use-store";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { ArrowDownToLine, MousePointerClick } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 export const ScreenshotPreview = () => {
   const { data } = useDataStore();
-  const { imageSrc, pageTitle, fileName } = data;
+  const { imageSrc, pageTitle, fileName, isFullPage } = data;
 
   const handleDownload = () => {
     const link = document.createElement("a");
@@ -34,12 +35,15 @@ export const ScreenshotPreview = () => {
           <div className="flex gap-4">
             <div className="flex gap-1">
               <span className="font-semibold">Website: </span>
-              <span className="">{pageTitle}</span>
+              <span className="text-accent">{pageTitle}</span>
             </div>
             <div className="flex gap-1">
               <span className="font-semibold">File: </span>
-              <span className="">{fileName}</span>
+              <span className="text-accent">{fileName}</span>
             </div>
+            <Badge className="bg-zinc-700 text-white px-2 py-1">
+              {isFullPage ? "Full Page" : "Visible Part"}
+            </Badge>
           </div>
           <div className="flex gap-4">
             <Button
@@ -54,7 +58,7 @@ export const ScreenshotPreview = () => {
           </div>
         </div>
       )}
-      <div className="overflow-y-auto aspect-video object-cover w-full border shadow-md">
+      <div className="hide-scrollbar overflow-y-auto aspect-video object-cover w-full border shadow-md">
         <Image
           src={imageSrc}
           alt={pageTitle!}

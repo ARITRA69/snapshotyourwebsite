@@ -16,6 +16,7 @@ interface Data {
     imageSrc?: string
     pageTitle?: string;
     fileName?: string;
+    isFullPage?: boolean;
 }
 
 interface DataStore {

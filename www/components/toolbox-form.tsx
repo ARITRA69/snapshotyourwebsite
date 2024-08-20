@@ -62,7 +62,12 @@ export const ToolboxForm = ({ url }: { url?: string }) => {
             const { fileName, pageTitle, screenshot, mimeType } = res.data;
 
             const imageSrc = `data:${mimeType};base64,${screenshot}`;
-            setData({ imageSrc: imageSrc, fileName, pageTitle });
+            setData({
+              imageSrc: imageSrc,
+              fileName,
+              pageTitle,
+              isFullPage: data.captureMode === "FULL_PAGE",
+            });
           }
         } catch (error) {
           console.log(error);
