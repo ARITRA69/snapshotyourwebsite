@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main className="flex-1 flex flex-col items-center pt-52 gap-10">
-      <h1 className="text-[5rem] leading-none font-extrabold [word-spacing:5px] tracking-tight">
+      <h1 className="text-[4.5rem] leading-none font-extrabold [word-spacing:5px] tracking-tight">
         Snapshot Your Website
       </h1>
 
