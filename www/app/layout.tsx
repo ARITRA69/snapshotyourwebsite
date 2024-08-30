@@ -6,6 +6,7 @@ import { Banner } from "@/components/banner";
 import { ModalProvider } from "@/providers/modal-provider";
 import { Footer } from "@/components/footer";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 
 const gabarito = Gabarito({ subsets: ["latin"] });
 
@@ -33,6 +34,14 @@ export default function RootLayout({
           {children}
           <Footer />
         </div>
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "nvgsnyfld1");`}
+        </Script>
       </body>
     </html>
   );
